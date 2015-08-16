@@ -7,7 +7,7 @@ _Due Mon. Aug.17_
 - **Problem 1:** A Cards Module _[20% of total time]_ **Goals:** Start working with IIFEs and closure to create a self-contained module for your cards.
 - **Problem 2:** All Hands Off Deque _[25%]_ **Goals:** Get more comfortable with closure by creating a secure version of the deque from last week.
 - **Problem 3:** Secrets At All Levels _[25%]_ **Goals:** Build on Monday's in-class password example to practice closures at the level of both instance and factory methods.
-- **Problem 4:** Coming soon!
+- **Problem 4:** Cancelled!  Enjoy Javascript through other means!
 
 ---
 
@@ -63,4 +63,4 @@ The log should not be able to be modified other than through a user's _record_ m
 
 **4)**
 
-This problem is under construction and will be ready later today (Tues).  Get started on problems 1-3 and watch this space!
+Cancelled.  Its treasures will appear on another homework set someday.
