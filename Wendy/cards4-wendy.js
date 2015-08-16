@@ -2,16 +2,17 @@ var makeCard =
     (function () { //begin IIFE...
    
     // The factory itself:
-    function makeCard(id, low, high) {  //makeCard is also IIFE's internal name
-        if (typeof id!="number") {
-        return null;
-        }
-        if(id%1 !==0) {
-        return null;
-        }
-        if(id<low || id>high) {
-        return null;
-        }
+    function makeCard(id) {  //makeCard is also IIFE's internal name
+        // if (typeof id!="number") {
+        // return null;
+        // }
+        // if(id%1 !==0) {
+        // return null;
+        // }
+        // if(id<low || id>high) {
+        // return null;
+        // }
+    if (isValidId(id)) {
     
         return {
             id: id,
@@ -21,7 +22,11 @@ var makeCard =
             cardName: cardName
         
         }
-    };
+    }   
+    else {
+        return null;
+    } 
+};
 
  
     
@@ -30,17 +35,17 @@ var makeCard =
 //--------------------------
 // Private resources (internal use only)
 //--------------------------
-    // function isValidId (id, low, high) {
-    //     if (typeof id!="number") {
-    //     return null;
-    //     }
-    //     if(id%1 !==0) {
-    //     return null;
-    //     }
-    //     if(id<low || id>high) {
-    //     return null;
-    //     }
-    // };
+    function isValidId (id) {
+        if (typeof id!=="number") {
+            return null;
+        }
+        else if (id < 0 || id > 51) {
+        return null;
+        }
+        else {
+        return true;
+    }
+    };
 
    
     var suitNames = ['', 'Hearts', 'Diamonds', 'Spades', 'Clubs'];
@@ -75,13 +80,18 @@ var makeCard =
 
 makeCard.isCard = function(thing) { // --> true,false
         var array = ['id', 'rank', 'suit', 'color', 'cardName'];
-            var i = array[i]; //the place in the array.
+            // var i = array[i]; //the place in the array.
             for (i = 0; i <= array.length; i++) {
-                if (thing.hasOwnProperty(i)=== makeCard.hasOwnProperty(i)) {
-                    i+=;
-                }
-                else 
-                return false;
+                if (!(thing.hasOwnProperty(array[i]))) { 
+                    console.log (array[i]);
+                    console.log (thing.hasOwnProperty(array[i]));
+                   
+                    return false;
+                    }
+                else {
+                    return true;
+                } 
+               
     }
 };
         
