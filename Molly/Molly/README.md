@@ -98,9 +98,115 @@ The implementation of a deque in Homework 4, Problem 2e), tries to maintain the 
 **a)**
 Write another version of a deque factory which protects the deque instances by using closure to hide their content arrays from the outside world.  Your deque methods should be the only way of changing their hidden arrays.  You may use the [template file](deque2-template.js) to get started.
 
-_(Hint #1: you'll have to give up the strategy of sharing factory methods with instances to avoid redundancy.  Instead, have each call to the factory generate a set of methods specific to one deque instance which can access any private arrays associated with it.)_
+var makeDeque = (function () {
+function makeDeque(values) {
+	var array = values.slice();
+	var discardPile = [];
+var deque = {
 
-_(Hint #2: the private arrays will live in a function scope, not in an object.)_
+	arrlength: function() {
+		return array.length;
+	},
+
+	top: function () {
+		return array[array.length-1];
+	},
+
+	bottom: function () {
+		return array[0];
+	},
+
+	pop: function () {
+	    var discardPop = values.pop();
+	    discardPile.push(discardPop);
+	    return discardPop;
+},
+
+	push: function () {
+		if (isInArray(val)){
+		discardPile.splice (removeFromDiscard(array), 1);
+		return array.push(val);
+	} else {
+		return 'null';
+	}
+},
+
+	shift: function() {
+	var discardShift = values.shift();
+	discardPile.push(discardShift);
+	return discardShift;
+},
+
+	unshift: function(val) {
+		if (isInArray(val)) {
+		discardPile.splice(removeFromDiscard(array),1);
+	return values.unshift(array);
+	} else {
+		return 'null';
+	}
+},
+
+	cut: function() {
+		var valuesHalfB = array.slice(Math.ceil(array.length/2));
+		array.splice(Math.ceil(array.length/2));
+		array = valuesHalfB.concat(array);
+	},
+
+	sort: function (compareValsFn) {
+		return array.sort(compareValsFn);
+},
+
+	map: function(compareValFn) {
+		return array.map(compareValsFn);
+	},
+
+	shuffle: function() {
+				var a = array.length;
+				var b;
+				var c;
+				while (m) {
+					c = Math.floor(Math.random() * a--);
+					b = array[a];
+					array[a] = array[c];
+					array[c] = b;
+				}
+				return array;
+			},
+
+	isInArray: function (array) {
+		for (i=0; i<discardPile.length; i++)
+	if (discardPile[i].id === value.id) {
+			return true;
+	} else {
+		return false;
+		}
+},
+
+removeFromDiscard: function(array){
+				for (i=0; i<discardPile.length; i++) {
+					if (discardPile[i].id === value.id){
+					return i;
+				}
+}
+
+return { values: values,
+length: arrlength,
+top: top,
+bottom: bottom,
+pop: pop,
+push: push,
+shift: shift,
+unshift: unshift,
+cut: cut,
+map: map,
+sort: sort,
+discardPile: [],
+isInArray: isInArray,
+removeFromDiscard: removeFromDiscard,
+	};
+}
+return makeDeque;
+})();
 
 **b)** Wrap the deque factory in an IIFE to create a module which exports _makeDeque_.
 
@@ -110,10 +216,36 @@ _(Hint #2: the private arrays will live in a function scope, not in an object.)_
 
 **a)**  Write a user-registration tool, a factory function `makeUser(name,pwd)` which accepts a username and password and generates a user object.  Once we have a user object we should be able to do two things with it: retrieve the corresponding username and test to see if a provided password matches that user's password.  Each user will have these methods:
 
-  + `getName()` returns the username;
-  + `validate(str)` takes a string and returns true if it matches that user's password.
+var makeUser = (function() {
+	var sharedLog = [];
+	function makeUser(name, password) {
+		var user = {
+		getName: getName,
+		validate: validate,
+		record: record,
+	};
 
-It should not be possible, however, to modify the username or password once created nor to directly see the password.
+		function getName(){
+			return name;
+		}
+
+		function validate(str) {
+			if (str === password) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function record(message) {
+			if (message) {
+				sharedLog.push(this.getName() + ':' + message);
+				return true;
+			}
+		}
+
+		return user;
+	}
 
 Here is a [template](users-template.js) to get you started.
 
@@ -121,13 +253,21 @@ Here is a [template](users-template.js) to get you started.
 
   + Each *user* object should have an additional method `record(message)` which writes an entry to the shared log in the format "_username: message_" and returns true.  If no message is provided, the `record` method should return undefined instead.
 
-  + Reading from the log is a operation of the system and not of individual users.
-  The factory itself should have a method `getLog(username)` whose argument _username_ is optional.  If _username_ is provided, _getLog_ should return a string of all log entries recorded by that user.  If _username_ is omitted (therefore undefined), return a string of all log entries from everyone.  In either case, log entries should be separated by newlines.
+  makeUser.getLog = function(user) {
+			function messageCallback(item) {
+				if (item.indexOf(user.getName())>=0) {
+					return true;
+				}
+			var userLog = sharedLog.filter(messageCallback);
+				return userLog.join('\n');
+			}
+		};
+		if (user) {
+			var userlog = sharedLog.filter(messageCallback);
+			return userLog.join('\n');
+		} else {
+				return sharedLog.slice().join('\n');
+		}
 
-The log should not be able to be modified other than through a user's _record_ method.
-
----
-
-**4)**
-
-This problem is under construction and will be ready later today (Tues).  Get started on problems 1-3 and watch this space!
+	return makeUser;
+})();
