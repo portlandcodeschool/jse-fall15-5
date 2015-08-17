@@ -21,6 +21,7 @@ var makeUser = (function() {// begin IIFE...
 			var userMessage = (userProfile() + ': ' + message);
 			console.log (userMessage);
 			sharedLog.push(userMessage);
+			return true;
 		}
 
 		return {
@@ -29,15 +30,23 @@ var makeUser = (function() {// begin IIFE...
 			record: record
 		}
 
-	}
-	// 	record(message) (Part b)
-	// }
-
-	// Part b) only:
+	};
+	
 	// Factory method (defined within IIFE, so can access sharedLog):
 	makeUser.getLog = function(user) {
-		return sharedLog;
+		if (user == undefined) {
+			return sharedLog.join('\n');
+		}
+		else {
+			function myFilter(entry){
+				return (entry.indexOf(user.userProfile())===0); //searching through	
+			}	
+		
+			return sharedLog.filter(myFilter).join('\n');
+		}
+
 	}
+		
 
 
 	return makeUser;
