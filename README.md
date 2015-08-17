@@ -28,14 +28,19 @@ You may use the [template file](cards4-template.js) to get started.
 
 The implementation of a deque in Homework 4, Problem 2e), tries to maintain the integrity of the deque contents by preventing a _push_ or _unshift_ of items not in the original deque.  But a programmer could deliberately or accidentally circumvent those efforts by accessing and changing the deque's array instead of using its methods.  
 
-[ ]**a)**
+[X]**a)**
 Write another version of a deque factory which protects the deque instances by using closure to hide their content arrays from the outside world.  Your deque methods should be the only way of changing their hidden arrays.  You may use the [template file](deque2-template.js) to get started.
+
+[??] Why is var array = values.slice() slicing values and are they being put in a array? 
 
 _(Hint #1: you'll have to give up the strategy of sharing factory methods with instances to avoid redundancy.  Instead, have each call to the factory generate a set of methods specific to one deque instance which can access any private arrays associated with it.)_
 
 _(Hint #2: the private arrays will live in a function scope, not in an object.)_
 
-[ ]**b)** Wrap the deque factory in an IIFE to create a module which exports _makeDeque_.
+[X]**b)** Wrap the deque factory in an IIFE to create a module which exports _makeDeque_.
+[??] How do you call IIFE's 
+[??] What does it mean to 'export' _makeDeque_?
+
 
 ---
 
