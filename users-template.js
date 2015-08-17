@@ -9,6 +9,22 @@ var makeUser = (function() {// begin IIFE...
 		// getName()
 		// validate(str)
 		// record(message) (Part b)
+		var name = name;
+		var passwd = passwd;
+
+		var instance = {
+			name : getName,
+			validate : validate
+		};
+	
+		function getName() {
+
+		};
+		function validate(str) {
+
+		};
+		
+		
 	}
 
 	// Part b) only:

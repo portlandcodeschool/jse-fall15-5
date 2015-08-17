@@ -22,9 +22,10 @@ The instance methods still need to be linked to each instance, and the factory m
 
 You may use the [template file](cards4-template.js) to get started.
 
+
 ---
 
-[ ]**2)  All hands off deque**
+[X]**2)  All hands off deque**
 
 The implementation of a deque in Homework 4, Problem 2e), tries to maintain the integrity of the deque contents by preventing a _push_ or _unshift_ of items not in the original deque.  But a programmer could deliberately or accidentally circumvent those efforts by accessing and changing the deque's array instead of using its methods.  
 
@@ -54,6 +55,7 @@ _(Hint #2: the private arrays will live in a function scope, not in an object.)_
 It should not be possible, however, to modify the username or password once created nor to directly see the password.
 
 Here is a [template](users-template.js) to get you started.
+
 
 [ ]**b)**  Now that we can make user objects, let's assume that our system needs some version of a "system log" that will record messages left by different users. This system log, being shared by all user objects created, will contain all the messages that users have recorded. You will need to modify the factory you made above to be a part of a module that has a private variable that holds the system log.
 
