@@ -3,10 +3,39 @@ var makeCard = // receive factory with external name `makeCard`
 
     // The factory itself:
     function makeCard(id) {  //makeCard is also IIFE's internal name
-        // set instance properties here
+      if (makeCard.isValidID(id)){
+        return {
+
+          id: id,
+          rank: rank,
+          suit: suit,
+          color: color,
+          name: cardName
+
+          }
+        } else{
+          return null;
+     }
+    };
+
+
+// //-----------------------
+// // Methods to be called through factory only:
+// //-----------------------
+makeCard.isValidID = function(id){
+    return (typeof id === "number")&&(id%1===0)&&(id>=0)&&(id<=51);
+};
+
+makeCard.isCard = function(thing) {
+        return (typeof thing === 'object')&&(makeCard.rank === thing.rank)&&('id' in thing)&&(makeCard.isValidID(thing.id));
+};    // set instance properties here
+
+var rankNames = ['','Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Jack','Queen','King'],
+
+var suitNames = ['','Hearts','Diamonds','Spades','Clubs'],
         //...
         // and return instance...
-    };
+
 
 
 //--------------------------
@@ -21,13 +50,28 @@ var makeCard = // receive factory with external name `makeCard`
 //-----------------------
 // Instance Methods:
 //-----------------------
+rank = function() {
+         return Math.floor(this.id/4)+1;
+//  // --> 1..13
+//     // code here...
+ };
 
-    function rank() {
-    }
+suit = function() {
+         return ((this.id%4)+1); // --> 1..4
+//     // code here...
+ };
 
-    function suit() {
-    }
+color = function() {
+       var theSuit=this.suit(); //may be NaN
+         return theSuit && ((theSuit<3)? "red": "black");
+};
 
+cardName = function() {
+         var theRank = this.rank();
+         var theSuit = this.suit();
+         return theRank && theSuit &&
+         (makeCard.rankNames[theRank]+' of '+makeCard.suitNames[theSuit]);
+};
     //etc...
 
 
