@@ -269,6 +269,7 @@ var makeDeque = (function() {   //Begin IIFE
 
           var badShuffle = function() {
             values.sort(sortRandom);
+            return values
           };
 
           var goodShuffle = function() {  //Code modified from bost.ocks.org/mike/shuffle/
@@ -309,9 +310,6 @@ var makeDeque = (function() {   //Begin IIFE
 
 var array = [0,0,1,2,4,'Newark', false];
 
-var deque1 = makeDeque(array);
-
-console.log(deque1.goodShuffle(), deque1.pop());
 
 
 //Problem 3:
@@ -320,9 +318,17 @@ console.log(deque1.goodShuffle(), deque1.pop());
 
 var makeUser = (function() {
 
+
 var systemLog = {};     //Private log for all user objects
 
 var makeUser = function(name, pwd) {
+
+  name = name.toLowerCase();    //Ensuring consistent capitalization
+
+  systemLog[name] = {};         //Creating blank object to write
+                                  //each user's log entries into
+  var counter = 1;        //Counter for record() function
+
   var getName = function() {
     return name;
   };
@@ -334,12 +340,11 @@ var makeUser = function(name, pwd) {
   };
 
   var record = function(message) {
-    var counter = 0;
+
     if (!message) {
       return undefined;
     } else {
-    systemLog[name] = {};
-    systemLog[name] = name + ': ' + message + '\n';
+    systemLog[name][counter] = name + ': ' + message + '\n';
     counter++;
   }
   };
@@ -354,22 +359,19 @@ var makeUser = function(name, pwd) {
 
 }
 
-makeUser.getLog = function(username) {
+makeUser.getLog = function(userObj) {
 
-  var string = '';
-
-  if (!username) {
-
+  var string = '';    //String to be filled in and returned
+  if (!userObj) {
       for (var key in systemLog) {
-        for (var i = 0; i <systemLog[key].length; i++) {
-          string += systemLog[key][i];
+        for (var entry in systemLog[key]) {
+          string += systemLog[key][entry];
         }
       }
       return string;
-
   } else {
-    for (var i=0; i<systemLog[name].length;i++){
-      string += systemLog[name][i];
+    for (var key in systemLog[userObj.getName()]) {
+      string += systemLog[userObj.getName()][key];
     }
     return string;
   }
@@ -378,9 +380,3 @@ makeUser.getLog = function(username) {
 return makeUser;
 
 })();
-
-var ralph = makeUser('Ralph', 'daBomb');
-
-ralph.record('yo, this is ralph. checkin\' in');
-
-console.log(makeUser.getLog());
